@@ -15,15 +15,11 @@ class EventEmitter {
 
     off(type, callback) {
         if (!this.event[type]) return;
-
-        this.event[type] = this.event[type].filter(fn => fn != callback);
+        this.event[type] = this.event[type].filter(fn => fn !== callback);
     }
 
     emit(type, ...args) {
-        if (!this.event[type]) return;
-
-        let callbacks = this.event[type];
-        callbacks.forEach(cb => cb(...args));
+        this.event[type] && this.event[type].forEach(cb => cb(...args));
     }
 
     once(type, callback) {
