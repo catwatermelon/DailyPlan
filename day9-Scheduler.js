@@ -37,6 +37,7 @@ class Scheduler {
         }
     }
     request() {
+        // 当任务队列中没有任务 或 并发执行的异步任务数大于限定数，则不执行
         if (!this.queue || !this.queue.length || this.runCounts >= this.maxCount) {
             return;
         }
