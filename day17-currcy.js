@@ -4,7 +4,7 @@
 // let sumFn = curry(sum);
 // console.log(sumFn(1)(2)(3)); //6
 // console.log(sumFn(1)(2, 3)); //6
-
+// 柯里化的作用：参数复用、提前返回和 延迟执行
 function sum(a,b,c) {
     return a+b+c;
 }
@@ -24,3 +24,8 @@ function curry(fn, args = []) {
 let sumFn = curry(sum);
 console.log(sumFn(1)(2)(3)); //6
 console.log(sumFn(1)(2, 3)); //6
+
+
+let sumFn2 = curry(sum, [1]);
+console.log(sumFn2(2)(3)); //6
+console.log(sumFn2(2, 3)); //6
