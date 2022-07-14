@@ -71,4 +71,45 @@ class LazyMan {
 // let lz = new LazyMan('Hank');
 // let lz2 = new LazyMan('Hank').sleep(10).eat('dinner');
 // let lz3 = new LazyMan('Hank').eat('dinner').eat('supper');
-let lz4 = new LazyMan('Hank').eat('supper').sleepFirst(5);
+// let lz4 = new LazyMan('Hank').eat('supper').sleepFirst(5);
+
+
+function LazyMan2(name) {
+    const sleep = (ms) => new Promise((resolve) => { 
+        setTimeout(() => {
+            resolve();
+        }, ms * 1000);
+     });
+
+    const tasks = [['greet', name]];
+    const actions = {
+        greet: (name) => console.log(`Hi This is ${name}`),
+        eat: (food) => console.log(`Eat ${food}`),
+        sleep: (ms) => sleep(ms).then(()=>console.log(`Wake up after ${ms}`))
+    }
+    async function exec() {
+        for(let [cmd, val] of tasks) {
+            await actions[cmd](val);
+        }
+    }
+    setTimeout(() => {
+        exec();   
+    });
+    return {
+        eat(food) {
+            tasks.push(['eat', food]);
+            return this;
+        },
+        sleep(ms) {
+            tasks.push(['sleep', ms]);
+            return this;
+        },
+        sleepFirst(ms) {
+            tasks.unshift(['sleep', ms]);
+            return this;
+        }
+    };
+}
+
+// let lz22 = LazyMan2('Hank').sleep(10).eat('dinner');
+let lz24 = LazyMan2('Hank').eat('supper').sleepFirst(5);
