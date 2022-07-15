@@ -55,3 +55,15 @@ console.log(sumFn22(2, 3)); //6
 let sumFn23 = curry2(sum, [1]);
 console.log(sumFn23(2)(3)); //6
 console.log(sumFn23(2, 3)); //6
+
+// 纯 curry，第一次不能接收参数，但是更好理解
+const curry3 = (fn) => {
+    return function curryInner(...args) {
+        if(args.length >= fn.length) return fn(...args);
+        return (...subArgs) => curryInner(...args, ...subArgs);
+    }
+}
+
+let sumFn31 = curry3(sum);
+console.log(sumFn31(1)(2)(3)); //6
+console.log(sumFn31(1)(2, 3)); //6
