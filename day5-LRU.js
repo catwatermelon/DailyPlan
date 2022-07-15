@@ -1,4 +1,5 @@
 // LRU 的实现
+// least recently usd(最近最少使用页面置换算法
 
 // 1. Map 实现
 class LRUCache {

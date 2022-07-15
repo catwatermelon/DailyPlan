@@ -47,7 +47,7 @@ function set(obj, path, value) {
         }
     })
 }
- 
+
 const obj = {
     a: {
         b: {
