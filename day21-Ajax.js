@@ -72,14 +72,19 @@ class HttpRequest {
 
     // ③ 在实现的 Ajax 基础上实现请求顺序调用，第一个调用成功之后，再调用第二个，以此类推
     queueRequest(requests) {
-        const result = [];
-        while(requests.lenth) {
-            requests.shift().then(res=>{
-                result.push(res);
-            }).catch(err=>{
-                result.push(err);
-            });
-        }
-        return result;
+        return new Promise((resolve) => {
+            const result = [];
+            const start = () => {
+                if(!requests || !requests.length) return resolve(result);
+                requests.shift().then(res=>{
+                    result.push(res);
+                }).catch(err=>{
+                    result.push(err);
+                }).finally(() => {
+                    start();
+                });
+            }
+            start();
+        })
     }
 }
