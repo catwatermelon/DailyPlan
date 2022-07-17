@@ -18,7 +18,7 @@ class HttpRequest {
         if (window.XMLHttpRequest) {
             this.http = new XMLHttpRequest();
         } else {
-            this.http = new ActiveXObject();
+            this.http = new ActiveXObject('Microsoft.XMLHTTP');
         }
     }
     request(method, url, data) {
