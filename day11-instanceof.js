@@ -4,6 +4,7 @@
 // 判断 B 的 prototype 属性指向的原型对象(B.prototype)是否在对象 A 的原型链上。
 // 如果在，则为 true；如果不在，则为 false。
 
+// 1. 遍历
 const myInstanceof = (left, right) => {
     // 左边参数是普通值则直接返回false
     if(typeof left !== 'object' && left !== null) return false;
@@ -18,5 +19,19 @@ const myInstanceof = (left, right) => {
     return false;
 }
 
-console.log(myInstanceof('777', String)); // false
-console.log(myInstanceof(new String('777'), String)); // true
+// 2. 递归
+const myInstanceof2 = (left, right) => {
+    // 左边参数是普通值则直接返回false
+    if(typeof left !== 'object' && left !== null) return false;
+    if(typeof right !== 'function') throw new Error('right must be function!');
+
+    let L = Object.getPrototypeOf(left);
+    const R = right.prototype;
+
+    if(L === null) return false;
+    else if(L === R) return true;
+    return myInstanceof2(L, right);
+}
+
+console.log(myInstanceof2('777', String)); // false
+console.log(myInstanceof2(new String('777'), String)); // true
