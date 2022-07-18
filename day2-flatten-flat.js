@@ -18,6 +18,19 @@ const flatten3 = (arr) => {
     return arr;
 }
 
+const flatten4 = (arr) => {
+    const result = [];
+    while(arr.length) {
+        const lastItem = arr.pop();
+        if(Array.isArray(lastItem)) {
+            arr.push(...lastItem)
+        } else {
+            result.unshift(lastItem);
+        }
+    }
+    return result;
+}
+
 // 2. 原生flat，可指定深度
 const flat = (arr, depth) => {
     if(!Array.isArray(arr) || depth <= 0) return arr;
@@ -40,4 +53,4 @@ function _flat(arr, depth) {
 }
 let arr = [1, [2, [3, 4, 5]]];
 let arr2 = [1,2,3,4,[2,3,[4,5,6,[7,8],112,[192]]],5,6,7,8];
-console.log(flatten3(arr2));
+console.log(flatten4(arr2));
