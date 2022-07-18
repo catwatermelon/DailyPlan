@@ -5,7 +5,7 @@
 // 如果参数中有一个promise失败，那么Promise.all返回的promise对象失败
 // 在任何情况下，Promise.all 返回的 promise 的完成状态的结果都是一个数组
 
-Promise.all = (promises) => {
+Promise.myAll = (promises) => {
     const lens = promises.length;
     const result = [];
     if(!lens) return Promise.resolve(result);
@@ -26,3 +26,21 @@ Promise.all = (promises) => {
         }
     })
 }
+
+let p1 = Promise.resolve(1)
+let p2 = 2
+let p3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, 3)
+})
+
+let p4 = Promise.reject('出错啦')
+
+Promise.myAll([p1, p2, p3]).then((res) => {
+  console.log(res); // [ 1, 2, 3 ]
+});
+
+Promise.myAll([ p1, p2, p4 ]).then((res) => {
+  console.log(res)
+}).catch((err) => {
+  console.log('err', err) // err 出错啦
+})
