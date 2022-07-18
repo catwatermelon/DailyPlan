@@ -14,8 +14,10 @@ const deepClone = (target, cache = new Map()) => {
     cache.set(target, cloneTarget)
 
     for (const key in target) {
-      const value = target[ key ] 
-      cloneTarget[ key ] = isObject(value) ? deepClone(value, cache) : value
+      if(target.hasOwnProperty(key)) {
+        const value = target[ key ] 
+        cloneTarget[ key ] = isObject(value) ? deepClone(value, cache) : value
+      }
     }
     return cloneTarget
   } else {
