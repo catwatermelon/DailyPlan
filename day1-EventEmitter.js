@@ -15,7 +15,11 @@ class EventEmitter {
 
     off(type, callback) {
         if (!this.event[type]) return;
-        this.event[type] = this.event[type].filter(fn => fn !== callback);
+        if(callback == void 0) { // 如果没有传 callback 的话，退订整个类型的事件
+            delete this.event[type];
+        } else {
+            this.event[type] = this.event[type].filter(fn => fn !== callback);
+        }
     }
 
     emit(type, ...args) {
