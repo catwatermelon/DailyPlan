@@ -77,4 +77,32 @@ const findTargetById = (data, id) => {
     };
 }
 
-console.log(findTargetById(data, '1212'));
+// console.log(findTargetById(data, '1212'));
+
+const findTargetById2 = (data, id) => {
+    let path = [];
+    while (data.length) {
+        const node = data.shift();
+        path.push(node.id);
+        if (node.id === id) { // hit
+            return {
+                o: node,
+                path
+            };
+        } else {
+            const children = node.children || [];
+            if (children && children.length) {
+                if (data.length === 0) path = [node.id]
+                data.unshift(...children);
+            } else { // 到底了pop
+                path.pop();
+            }
+        }
+    }
+    return {
+        o: null,
+        path: []
+    };
+}
+
+console.log(findTargetById2(data, '2002'));
