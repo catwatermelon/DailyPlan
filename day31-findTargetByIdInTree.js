@@ -55,3 +55,26 @@ const data = [
         ]
     }
 ];
+
+const findTargetById = (data, id) => {
+    let retPath = [], retTarget = null;
+    const dfs = (tree, id, path) => {
+        const lens = tree.length;
+        for (let i = 0; i < lens; ++i) {
+            if (tree[i].id === id) { // hit
+                retTarget = tree[i];
+                retPath = path.concat(tree[i].id);
+                return;
+            } else {
+                tree[i].children && dfs(tree[i].children, id, path.concat(tree[i].id));
+            }
+        }
+    }
+    dfs(data, id, []);
+    return {
+        o: retTarget,
+        path: retPath.join('->')
+    };
+}
+
+console.log(findTargetById(data, '1212'));
