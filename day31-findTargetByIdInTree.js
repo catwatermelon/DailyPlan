@@ -105,4 +105,4 @@ const findTargetById2 = (data, id) => {
     };
 }
 
-console.log(findTargetById2(data, '2002'));
+console.log(findTargetById2(data, '2000'));
