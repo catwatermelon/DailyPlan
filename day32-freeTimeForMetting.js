@@ -17,15 +17,34 @@
 // 即使是一个人的安排，也有可能出现时间段的重复
 
 const plans = [
-  [[13,15], [11,12], [10,13]], //成员1的安排
+  [[13, 15], [11, 12], [10, 13]], //成员1的安排
   [[8, 9]], //成员2的安排
-  [[13, 18]] //成员3的安排
+  [[13, 18], [14, 20], [21, 22]] //成员3的安排
 ]
 const findMeetingSlots = (planTimes) => {
-    const result = new Array(24).fill(0);
-    planTimes.flat(Infinity).forEach(item => {
-        result[item]++;
-    })
-    return result;
+  const schedule = new Array(24).fill(0);
+  planTimes.flat(1).forEach(item => {
+    schedule.fill(1, item[0], item[1]);
+  })
+  let start = 0, end = 0, lens = schedule.length, result = [];
+  while (end < lens) {
+    if (schedule[start] === 1 && schedule[end] === 0) { // [1,0], reset start index, incre end
+      start = end;
+      end++;
+      continue;
+    }
+    if (schedule[end] === 1) { // meet end tag
+      if (schedule[start] === 0) { // [0, ..., 1]
+        result.push([start, end]);
+      }
+      start = end; // [0, ..., 1] [1, ..., 1], update start index
+    }
+    end++;
+  }
+  if (end === lens && end - start >= 1) {
+    result.push([start, end]);
+  }
+  return result;
 }
-console.log(findMeetingSlots(plans))
+
+console.log(findMeetingSlots(plans));
