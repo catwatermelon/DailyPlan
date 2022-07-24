@@ -23,7 +23,25 @@ const encode = (str) => {
     return result.join("");
 }
 
-console.log(encode('aaaabbbccddc'));
+const encode2 = (str) => {
+    const lens = str.length;
+    if (!lens) return '';
+    let result = '', cnt = 1, curWord = str[0];
+    for (let i = 1; i < lens; ++i) {
+        if (str[i] === curWord) {
+            cnt++;
+        } else {
+            result += curWord + cnt;
+            curWord = str[i];
+            cnt = 1;
+        }
+        if (i === lens - 1) {
+            result += curWord + cnt;
+        }
+    }
+    return result;
+}
+console.log(encode2('aaaabbbccddc'));
 
 // 扩展1：如果只出现一次，不编码数字，如 aaab -> a3b
 const encodeWithoutLess = (str, ignoreCnt = 0) => {
@@ -47,4 +65,4 @@ const encodeWithoutLess = (str, ignoreCnt = 0) => {
     return result.join("");
 }
 
-console.log(encodeWithoutLess('aaaabbbeccddc', 2));
+// console.log(encodeWithoutLess('aaaabbbeccddc', 2));
