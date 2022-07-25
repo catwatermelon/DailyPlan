@@ -41,7 +41,21 @@ const encode2 = (str) => {
     }
     return result;
 }
-console.log(encode2('aaaabbbccddc'));
+
+const encode3 = (str) => {
+    const lens = str.length, result = [];
+    let count = 0;
+    for (let i = 0; i < lens; i++) {
+        count++;
+        if (str[i] !== str[i + 1]) {
+            result.push(str[i], count);
+            count = 0;
+        }
+    }
+    return result.join("")
+}
+
+console.log(encode3('aaaabbbccddc'));
 
 // 扩展1：如果只出现一次，不编码数字，如 aaab -> a3b
 const encodeWithoutLess = (str, ignoreCnt = 0) => {
