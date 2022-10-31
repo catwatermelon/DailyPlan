@@ -40,3 +40,28 @@ const jsonp = ({ url, data, callback }) => {
         }
     }
 }
+
+// promise 版本
+function jsonpPromise({ url, data, callback }) {
+    const head = document.getElementsByTagName('head')[0];
+    const fn = `jsonp_${Date.now()}`;
+    const script = document.createElement('script');
+    script.src = `${url}?${objectToQuery(data)}&callback=${fn}`;
+    head.appendChild(script);
+
+    return new Promise((resolve, reject) => {
+        window[fn] = function (res) {
+            // 清除
+            head.removeChild(script);
+            delete window[fn];
+            resolve(res);
+        }
+
+        // 异常处理
+        script.onerror = function () {
+            head.removeChild(script);
+            delete window[fn];
+            reject('something error hanppend!');
+        }
+    })
+}
