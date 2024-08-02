@@ -38,3 +38,6 @@ console.log(str.replace(regex, '---'))
 var str = '1234567.234';
 const amontRegex = /(\d)(?=(\d{3})+((\.\d+)$))/g
 console.log(str.replace(amontRegex, '$1,'));
+
+// 密码校验，至少包含一个大写一个小写一个数字
+console.log(/(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])\w{8}/.test('234sW342'))
