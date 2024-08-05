@@ -56,14 +56,17 @@ const data = [
     }
 ];
 
+// 错误示范：
 const findTargetById = (data, id) => {
     let retPath = [], retTarget = null;
     const dfs = (tree, id, path) => {
+        console.log('---')
         const lens = tree.length;
         for (let i = 0; i < lens; ++i) {
             if (tree[i].id === id) { // hit
                 retTarget = tree[i];
                 retPath = path.concat(tree[i].id);
+                console.log(111)
                 return;
             } else {
                 tree[i].children && dfs(tree[i].children, id, path.concat(tree[i].id));
@@ -76,8 +79,31 @@ const findTargetById = (data, id) => {
         path: retPath.join('->')
     };
 }
+console.log(findTargetById(data, '1212'));
+console.log('|||||||||||||||||||||||||||')
 
-// console.log(findTargetById(data, '1212'));
+// 上面这套代码即使找到了 target 仍然会继续递归，性能不好
+// 正确示范：
+const findTargetByIdPlus = (tree, id, path = []) => {
+    console.log('--------')
+    for(let i=0; i<tree.length; ++i) {
+      if(tree[i].id === id) {
+        console.log(11111)
+        return {
+            o: tree[i],
+            path
+        }
+      }
+      if(tree[i].children.length) {
+        const result = findTargetByIdPlus(tree[i].children, id, path.concat(tree[i].id))
+        if(result) return result
+      }
+    }
+    return null
+}
+console.log(findTargetByIdPlus(data, '1212'));
+console.log('|||||||||||||||||||||||||||')
+
 
 const findTargetById2 = (data, id) => {
     let path = [];
@@ -105,4 +131,4 @@ const findTargetById2 = (data, id) => {
     };
 }
 
-console.log(findTargetById2(data, '2000'));
+// console.log(findTargetById2(data, '2000'));
