@@ -21,10 +21,16 @@ class HttpRequest {
             this.http = new ActiveXObject('Microsoft.XMLHTTP');
         }
     }
-    request(method, url, data) {
+    request(method, url, data = {}) {
+        method = method.toUpperCase() === "POST"
         return new Promise((resolve, reject) => {
-            this.http.open(method, url, true); // true表示异步
-            data && this.http.send(this._format(data));
+            this.http.open(method, url, true); // true表示异步，如果是 false 就是同步请求了，不用监听 onreadystatechange，直接写在 send 方法后面就好了
+            if(method === "POST") {
+                this.http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                this.http.send(this._format(data));
+            } else {
+                this.http.send();
+            }
             this.http.onreadystatechange = function () {
                 if (this.http.readyState === 4) {
                     if (this.http.status >= 200 && this.http.status < 300) {
