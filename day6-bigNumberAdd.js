@@ -13,13 +13,13 @@ function add(a, b) {
     a = a.padStart(maxLength , 0);//"0009007199254740991"
     b = b.padStart(maxLength , 0);//"1234567899999999999"
     
-    let flag = 0, sum = '';
+    let carry = 0, sum = '';
     for(let i=maxLength-1; i>=0; i--) {
-        let t = +a[i] + +b[i] + flag;
-        f = Math.floor(t/10);
+        let t = +a[i] + +b[i] + carry;
+        carry = Math.floor(t/10);
         sum = t%10 + sum;
     }
-    if(f !== 0) sum = `${f}` + sum;
+    if(carry !== 0) sum = `${carry}` + sum;
     return sum;
 }
 
