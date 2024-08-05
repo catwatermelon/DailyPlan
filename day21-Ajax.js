@@ -24,7 +24,7 @@ class HttpRequest {
     request(method, url, data) {
         return new Promise((resolve, reject) => {
             this.http.open(method, url, true); // true表示异步
-            data && this.send(this._format(data));
+            data && this.http.send(this._format(data));
             this.http.onreadystatechange = function () {
                 if (this.http.readyState === 4) {
                     if (this.http.status >= 200 && this.http.status < 300) {
